@@ -18,10 +18,10 @@ class CategoryAdapter: RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>(
     inner class CategoryViewHolder(val binding: RvMainCategoryItemBinding): RecyclerView.ViewHolder(binding.root)
 
     interface OnItemClickListener{
-        fun onClicked(categoryName: String)
+        fun onItemClick(categoryName: String)
     }
-    fun setClickListener(listener1: OnItemClickListener){
-        categoryItemListener = listener1
+    fun setClickListener(listener: OnItemClickListener){
+        categoryItemListener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
@@ -39,7 +39,7 @@ class CategoryAdapter: RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>(
         holder.binding.txtDishDescription.text = categoryList[position].strCategoryDescription
 
         holder.itemView.rootView.setOnClickListener {
-            categoryItemListener!!.onClicked(categoryList[position].strCategory)
+            categoryItemListener!!.onItemClick(categoryList[position].strCategory)
         }
     }
 

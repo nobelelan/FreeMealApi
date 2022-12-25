@@ -1,6 +1,7 @@
 package com.example.freemealapi.ui
 
 import android.app.Application
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -54,12 +55,20 @@ class HomeActivity : AppCompatActivity() {
         })
 
         categoryAdapter.setClickListener(categoryClickListener)
+        mealAdapter.setOnClickListener(mealClickListener)
 
     }
 
     val categoryClickListener = object: CategoryAdapter.OnItemClickListener{
-        override fun onClicked(categoryName: String) {
+        override fun onItemClick(categoryName: String) {
             mealViewModel.getMealOnCategory(categoryName)
+        }
+    }
+    val mealClickListener = object : MealAdapter.OnItemClickListener{
+        override fun onItemClick(mealId: String) {
+            val intent = Intent(this@HomeActivity, DetailsActivity::class.java)
+            intent.putExtra("mealId", mealId)
+            startActivity(intent)
         }
     }
 

@@ -13,6 +13,15 @@ import com.example.freemealapi.models.Meal
 class MealAdapter: RecyclerView.Adapter<MealAdapter.MealViewHolder>() {
 
     var mealList = mutableListOf<Meal>()
+    var mealItemListener: OnItemClickListener? = null
+
+    interface OnItemClickListener{
+        fun onItemClick(mealId: String)
+    }
+
+    fun setOnClickListener(listener: OnItemClickListener){
+        mealItemListener = listener
+    }
 
     inner class MealViewHolder(val binding: RvSubCategoryItemBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -28,6 +37,10 @@ class MealAdapter: RecyclerView.Adapter<MealAdapter.MealViewHolder>() {
             .into(holder.binding.imgRecipeImage)
 
         holder.binding.tvRecipeName.text = mealList[position].strMeal
+
+        holder.itemView.setOnClickListener {
+            mealItemListener!!.onItemClick(mealList[position].idMeal)
+        }
     }
 
     override fun getItemCount(): Int {
