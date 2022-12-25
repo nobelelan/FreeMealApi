@@ -44,11 +44,11 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/gilroy_bold"
                 android:maxLines="2"
-                android:padding="10dp"
+                android:padding="6dp"
                 android:text="Dish Type"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:textSize="11sp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/txtDishDescription"
@@ -62,7 +62,7 @@
                 android:layout_marginBottom="4dp"
                 android:fontFamily="@font/gilroy_light"
                 android:ellipsize="end"
-                android:maxLines="5"
+                android:maxLines="6"
                 android:text="Dish Description"
                 android:textColor="@color/black"
                 android:textSize="11sp" />

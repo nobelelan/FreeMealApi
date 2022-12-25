@@ -13,8 +13,16 @@ import com.example.freemealapi.models.Category
 class CategoryAdapter: RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     var categoryList = mutableListOf<Category>()
+    var categoryItemListener: OnItemClickListener? = null
 
     inner class CategoryViewHolder(val binding: RvMainCategoryItemBinding): RecyclerView.ViewHolder(binding.root)
+
+    interface OnItemClickListener{
+        fun onClicked(categoryName: String)
+    }
+    fun setClickListener(listener1: OnItemClickListener){
+        categoryItemListener = listener1
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         return CategoryViewHolder(RvMainCategoryItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -29,6 +37,10 @@ class CategoryAdapter: RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>(
 
         holder.binding.txtDishType.text = categoryList[position].strCategory
         holder.binding.txtDishDescription.text = categoryList[position].strCategoryDescription
+
+        holder.itemView.rootView.setOnClickListener {
+            categoryItemListener!!.onClicked(categoryList[position].strCategory)
+        }
     }
 
     override fun getItemCount(): Int {

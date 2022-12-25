@@ -1,16 +1,20 @@
 package com.example.freemealapi.viewmodel
 
 import android.app.Application
+import android.widget.AdapterView
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
+import com.example.freemealapi.adapter.CategoryAdapter
 import com.example.freemealapi.models.CategoriesResponse
 import com.example.freemealapi.models.MealIngredientsResponse
 import com.example.freemealapi.models.MealsResponse
 import com.example.freemealapi.repository.MealRepository
 import com.example.freemealapi.utils.Resource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,84 +27,72 @@ class MealViewModel(
 
     private val _categoryLiveData = MutableLiveData<Resource<CategoriesResponse>>()
     val mealCategories: LiveData<Resource<CategoriesResponse>> = _categoryLiveData
-    var mealCategoriesResponse: CategoriesResponse? = null
 
     private val _mealLiveData = MutableLiveData<Resource<MealsResponse>>()
     val meals: LiveData<Resource<MealsResponse>> = _mealLiveData
-    var mealsResponse: MealsResponse? = null
 
     private val _ingredientsLiveData = MutableLiveData<Resource<MealIngredientsResponse>>()
     val ingredients: LiveData<Resource<MealIngredientsResponse>> = _ingredientsLiveData
-    var ingredientsResponse: MealIngredientsResponse? = null
 
     init {
-//        getAllMealCategories()
+        getAllMealCategories()
+
+
     }
 
 
-//    fun getAllMealCategories() = viewModelScope.launch {
-//        _categoryLiveData.postValue(Resource.Loading())
-//        try {
-//            val response = mealRepository.getAllMealCategories()
-//            if (response.isSuccessful){
-//                response.body()?.let { resultResponse ->
-//                    if (mealCategoriesResponse == null){
-//                        mealCategoriesResponse = resultResponse
-//                    }else{
-//                        val oldCategories = mealCategoriesResponse?.categories as MutableList
-//                        val newCategories = resultResponse.categories
-//                        oldCategories.addAll(newCategories!!)
-//                    }
-//                    _categoryLiveData.postValue(Resource.Success(mealCategoriesResponse ?: resultResponse))
-//                }
-//            }
-//            _categoryLiveData.postValue(Resource.Error("Request not successful!"))
-//        }catch (exception: Exception){
-//            _categoryLiveData.postValue(Resource.Error("Something went wrong!"))
-//        }
-//    }
+    private fun getAllMealCategories() {
+        _categoryLiveData.postValue(Resource.Loading())
+        val response = mealRepository.getAllMealCategories()
+        response.enqueue(object : Callback<CategoriesResponse> {
+            override fun onFailure(call: Call<CategoriesResponse>, t: Throwable) {
+                _categoryLiveData.postValue(Resource.Error("Request not successful!"))
+            }
 
-    fun getMealOnCategory(categoryName: String) = viewModelScope.launch {
+            override fun onResponse(
+                call: Call<CategoriesResponse>,
+                response: Response<CategoriesResponse>
+            ) {
+                _categoryLiveData.postValue(Resource.Success(response.body()!!))
+            }
+
+        })
+    }
+
+    fun getMealOnCategory(categoryName: String) {
         _mealLiveData.postValue(Resource.Loading())
-        try {
-            val response = mealRepository.getMealOnCategory(categoryName)
-            if (response.isSuccessful){
-                response.body()?.let { resultResponse ->
-                    if (mealsResponse == null){
-                        mealsResponse = resultResponse
-                    }else{
-                        val oldMeals = mealsResponse?.meals as MutableList
-                        val newMeals = resultResponse.meals
-                        oldMeals.addAll(newMeals!!)
-                    }
-                    _mealLiveData.postValue(Resource.Success(mealsResponse ?: resultResponse))
-                }
+        val response = mealRepository.getMealOnCategory(categoryName)
+        response.enqueue(object : Callback<MealsResponse> {
+            override fun onFailure(call: Call<MealsResponse>, t: Throwable) {
+                _mealLiveData.postValue(Resource.Error("Request not successful!"))
             }
-            _mealLiveData.postValue(Resource.Error("Request not successful!"))
-        }catch(exception: Exception){
-            _mealLiveData.postValue(Resource.Error("Something went wrong!"))
-        }
+
+            override fun onResponse(
+                call: Call<MealsResponse>,
+                response: Response<MealsResponse>
+            ) {
+                _mealLiveData.postValue(Resource.Success(response.body()!!))
+            }
+
+        })
     }
 
-    fun getMealDetailsOnMealId(id: String) = viewModelScope.launch {
+
+    private fun getMealDetailsOnMealId(id: String) {
         _ingredientsLiveData.postValue(Resource.Loading())
-        try {
-            val response = mealRepository.getMealDetailsOnMealId(id)
-            if (response.isSuccessful){
-                response.body()?.let { resultResponse ->
-                    if (ingredientsResponse == null){
-                        ingredientsResponse = resultResponse
-                    }else{
-                        val oldIngredients = ingredientsResponse?.mealIngredients as MutableList
-                        val newIngredients = resultResponse.mealIngredients
-                        oldIngredients.addAll(newIngredients)
-                    }
-                    _ingredientsLiveData.postValue(Resource.Success(ingredientsResponse ?: resultResponse))
-                }
+        val response = mealRepository.getMealDetailsOnMealId(id)
+        response.enqueue(object : Callback<MealIngredientsResponse> {
+            override fun onFailure(call: Call<MealIngredientsResponse>, t: Throwable) {
+                _ingredientsLiveData.postValue(Resource.Error("Request not successful!"))
             }
-            _ingredientsLiveData.postValue(Resource.Error("Request not successful!"))
-        }catch (exception: Exception){
-            _ingredientsLiveData.postValue(Resource.Error("Something went wrong!"))
-        }
+
+            override fun onResponse(
+                call: Call<MealIngredientsResponse>,
+                response: Response<MealIngredientsResponse>
+            ) {
+                _ingredientsLiveData.postValue(Resource.Success(response.body()!!))
+            }
+
+        })
     }
 }
