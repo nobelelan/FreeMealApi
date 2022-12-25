@@ -3,6 +3,7 @@ package com.example.freemealapi.ui
 import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -66,15 +67,19 @@ class HomeActivity : AppCompatActivity() {
         when(response){
             is Resource.Success ->{
                 response.data?.let { mealsResponse ->
+                    binding.progressBar.visibility = View.INVISIBLE
                     mealAdapter.setMealData(mealsResponse.meals!!.toMutableList())
                 }
             }
             is Resource.Error -> {
                 response.message?.let { message ->
+                    binding.progressBar.visibility = View.INVISIBLE
                     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                 }
             }
-            is Resource.Loading -> {}
+            is Resource.Loading -> {
+                binding.progressBar.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -84,14 +89,18 @@ class HomeActivity : AppCompatActivity() {
                 response.data?.let { categoriesResponse ->
                     categoryAdapter.setCategoryData(categoriesResponse.categories!!.toMutableList())
                     mealViewModel.getMealOnCategory(categoriesResponse.categories.first().strCategory)
+                    binding.progressBar.visibility = View.INVISIBLE
                 }
             }
             is Resource.Error -> {
                 response.message?.let { message ->
+                    binding.progressBar.visibility = View.INVISIBLE
                     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                 }
             }
-            is Resource.Loading -> {}
+            is Resource.Loading -> {
+                binding.progressBar.visibility = View.VISIBLE
+            }
         }
     }
 
