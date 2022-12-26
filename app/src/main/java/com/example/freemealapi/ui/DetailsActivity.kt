@@ -35,8 +35,14 @@ class DetailsActivity : AppCompatActivity() {
             MealViewModelProviderFactory(applicationContext as Application, mealRepository)
         mealViewModel =
             ViewModelProvider(this, mealViewModelProviderFactory)[MealViewModel::class.java]
-        val mealId = intent.getStringExtra("mealId")
-        mealViewModel.getMealDetailsOnMealId(mealId!!)
+        val categoryMealId = intent.getStringExtra("categoryMealId")
+        val searchMealId = intent.getStringExtra("searchMealId")
+        categoryMealId?.let {
+            mealViewModel.getMealDetailsOnMealId(categoryMealId)
+        }
+        searchMealId?.let {
+            mealViewModel.getMealDetailsOnMealId(searchMealId)
+        }
 
         mealViewModel.ingredients.observe(this, Observer { response ->
             when (response) {

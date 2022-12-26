@@ -24,4 +24,10 @@ interface MealApi {
         @Query("i")
         mealId: String
     ): Call<MealIngredientsResponse>
+
+    @GET("search.php")
+    fun getSpecificMealOnName(
+        @Query("s")
+        mealName: String
+    ): Call<MealIngredientsResponse>
 }

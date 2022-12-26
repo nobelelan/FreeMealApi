@@ -34,6 +34,9 @@ class MealViewModel(
     private val _ingredientsLiveData = MutableLiveData<Resource<MealIngredientsResponse>>()
     val ingredients: LiveData<Resource<MealIngredientsResponse>> = _ingredientsLiveData
 
+    private val _specificMealLiveData = MutableLiveData<Resource<MealIngredientsResponse>>()
+    val specificMealOnName: LiveData<Resource<MealIngredientsResponse>> = _specificMealLiveData
+
     init {
         getAllMealCategories()
 
@@ -93,6 +96,22 @@ class MealViewModel(
                 _ingredientsLiveData.postValue(Resource.Success(response.body()!!))
             }
 
+        })
+    }
+
+    fun getSpecificMealOnName(mealName: String){
+        _specificMealLiveData.postValue(Resource.Loading())
+        val response = mealRepository.getSpecificMealOnName(mealName)
+        response.enqueue(object : Callback<MealIngredientsResponse>{
+            override fun onResponse(
+                call: Call<MealIngredientsResponse>,
+                response: Response<MealIngredientsResponse>
+            ) {
+                _specificMealLiveData.postValue(Resource.Success(response.body()!!))
+            }
+
+            override fun onFailure(call: Call<MealIngredientsResponse>, t: Throwable) {
+                _specificMealLiveData.postValue(Resource.Error("Request not successful!"))            }
         })
     }
 }

@@ -10,4 +10,6 @@ class MealRepository {
 
     fun getMealDetailsOnMealId(mealId: String) = RetrofitInstance.mealApi.getMealDetailsOnMealId(mealId)
 
+    fun getSpecificMealOnName(mealName: String) = RetrofitInstance.mealApi.getSpecificMealOnName(mealName)
+
 }
