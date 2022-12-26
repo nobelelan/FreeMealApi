@@ -78,7 +78,7 @@ class MealViewModel(
     }
 
 
-    private fun getMealDetailsOnMealId(id: String) {
+    fun getMealDetailsOnMealId(id: String) {
         _ingredientsLiveData.postValue(Resource.Loading())
         val response = mealRepository.getMealDetailsOnMealId(id)
         response.enqueue(object : Callback<MealIngredientsResponse> {
