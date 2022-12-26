@@ -53,9 +53,14 @@ class DetailsActivity : AppCompatActivity() {
                                 .error(R.drawable.default_food_img)
                                 .into(binding.imgMealImage)
 
+                            binding.txtYtWatch.setOnClickListener {
+                                val intent = Intent(this, YoutubeWebActivity::class.java)
+                                intent.putExtra("ytUrl", ingredients.strYoutube)
+                                startActivity(intent)
+                            }
+
                             binding.txtMealName.text = ingredients.strMeal
                             binding.txtAreaName.text = ingredients.strArea
-//                            binding.txtYtWatch.text = ingredients.strYoutube
                             binding.txtCategory.text = ingredients.strCategory
 
                             binding.txtInstructions.text = ingredients.strInstructions

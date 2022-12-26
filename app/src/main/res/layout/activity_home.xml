@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/gilroy_bold"
-            android:text="Recipes"
+            android:text="Sub Categories"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"

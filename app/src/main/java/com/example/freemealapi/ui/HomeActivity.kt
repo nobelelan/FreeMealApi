@@ -1,5 +1,6 @@
 package com.example.freemealapi.ui
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -62,8 +63,15 @@ class HomeActivity : AppCompatActivity() {
     val categoryClickListener = object: CategoryAdapter.OnItemClickListener{
         override fun onItemClick(categoryName: String) {
             mealViewModel.getMealOnCategory(categoryName)
+            setSubCategoryTextTitle(categoryName)
         }
     }
+
+    @SuppressLint("SetTextI18n")
+    private fun setSubCategoryTextTitle(categoryName: String) {
+        binding.textView2.text = "${categoryName.replaceFirstChar { it.uppercase() }} Categories"
+    }
+
     val mealClickListener = object : MealAdapter.OnItemClickListener{
         override fun onItemClick(mealId: String) {
             val intent = Intent(this@HomeActivity, DetailsActivity::class.java)
@@ -92,12 +100,14 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun handleCategoriesResponse(response: Resource<CategoriesResponse>) {
         when(response){
             is Resource.Success ->{
                 response.data?.let { categoriesResponse ->
                     categoryAdapter.setCategoryData(categoriesResponse.categories!!.toMutableList())
                     mealViewModel.getMealOnCategory(categoriesResponse.categories.first().strCategory)
+                    setSubCategoryTextTitle(categoriesResponse.categories.first().strCategory)
                     binding.progressBar.visibility = View.INVISIBLE
                 }
             }
