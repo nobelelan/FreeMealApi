@@ -44,6 +44,10 @@ class DetailsActivity : AppCompatActivity() {
             mealViewModel.getMealDetailsOnMealId(searchMealId)
         }
 
+        binding.btnBack.setOnClickListener {
+            onBackPressed()
+        }
+
         mealViewModel.ingredients.observe(this, Observer { response ->
             when (response) {
                 is Resource.Success -> {

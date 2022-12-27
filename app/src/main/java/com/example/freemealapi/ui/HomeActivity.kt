@@ -107,9 +107,17 @@ class HomeActivity : AppCompatActivity() {
             override fun onQueryTextChange(newText: String?): Boolean {
                 if(newText.isNullOrEmpty()){
                     binding.rvSearchSpecificMeal.visibility = View.INVISIBLE
+                    binding.txtCategoriesText.visibility = View.VISIBLE
+                    binding.rvMainCategory.visibility = View.VISIBLE
+                    binding.txtSubCategory.visibility = View.VISIBLE
+                    binding.rvSubCategory.visibility = View.VISIBLE
                     binding.searchView.clearFocus()
                 }else{
                     binding.rvSearchSpecificMeal.visibility = View.VISIBLE
+                    binding.txtCategoriesText.visibility = View.INVISIBLE
+                    binding.rvMainCategory.visibility = View.INVISIBLE
+                    binding.txtSubCategory.visibility = View.INVISIBLE
+                    binding.rvSubCategory.visibility = View.INVISIBLE
                     mealViewModel.getSpecificMealOnName(newText)
                 }
                 return true
@@ -122,7 +130,9 @@ class HomeActivity : AppCompatActivity() {
         when(response){
             is Resource.Success ->{
                 response.data?.let { mealListResponse ->
-                    searchAdapter.setSearchItemData(mealListResponse.mealIngredients.toMutableList())
+                    mealListResponse.mealIngredients?.toMutableList()?.let {
+                        searchAdapter.setSearchItemData(it)
+                    }
                     binding.progressBar.visibility = View.INVISIBLE
                 }
             }

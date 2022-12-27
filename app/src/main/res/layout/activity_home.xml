@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".ui.HomeActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,9 +17,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.48"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/txtCategoriesText"
             tools:itemCount="1"
             tools:listitem="@layout/rv_main_category_item" />
 
@@ -42,12 +41,12 @@
                 android:editTextColor="@color/black"
                 android:iconifiedByDefault="false"
                 android:queryBackground="@color/transparent"
-                android:queryHint="Search recipes"
+                android:queryHint="Search all recipes"
                 android:textColorHint="@color/hintTextColor" />
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/txtCategoriesText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -75,21 +74,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rvMainCategory" />
 
-        <TextView
-            android:id="@+id/txtSubCategoryRecipe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginStart="16dp"
-            android:fontFamily="@font/gilroy_bold"
-            android:text="Sub Category Recipes"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rvSubCategory" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSubCategory"
             android:layout_width="0dp"
@@ -102,6 +86,13 @@
             tools:itemCount="1"
             tools:listitem="@layout/rv_sub_category_item" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:layout_constraintTop_toBottomOf="@+id/rvSubCategory"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyle"
@@ -112,7 +103,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.86" />
+
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSearchSpecificMeal"
@@ -123,20 +117,6 @@
             app:layout_constraintEnd_toEndOf="@+id/cardView"
             app:layout_constraintStart_toStartOf="@+id/cardView"
             app:layout_constraintTop_toBottomOf="@+id/cardView" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvSubCategoryRecipes"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_margin="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="627dp"
-            app:layout_constraintTop_toBottomOf="@id/txtSubCategoryRecipe"
-            tools:itemCount="1"
-            tools:listitem="@layout/rv_search_item"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
