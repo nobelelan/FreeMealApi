@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.freemealapi.R
 import com.example.freemealapi.databinding.ActivityDetailsBinding
+import com.example.freemealapi.db.MealIngredientsDatabase
 import com.example.freemealapi.repository.MealRepository
 import com.example.freemealapi.utils.Resource
 import com.example.freemealapi.viewmodel.MealViewModel
@@ -30,7 +31,8 @@ class DetailsActivity : AppCompatActivity() {
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val mealRepository = MealRepository()
+        val mealIngredientsDao = MealIngredientsDatabase.getDatabase(this).mealIngredientsDao()
+        val mealRepository = MealRepository(mealIngredientsDao)
         val mealViewModelProviderFactory =
             MealViewModelProviderFactory(applicationContext as Application, mealRepository)
         mealViewModel =

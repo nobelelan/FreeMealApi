@@ -9,7 +9,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import com.example.freemealapi.adapter.CategoryAdapter
+import com.example.freemealapi.db.MealIngredientsDatabase
 import com.example.freemealapi.models.CategoriesResponse
+import com.example.freemealapi.models.MealIngredients
 import com.example.freemealapi.models.MealIngredientsResponse
 import com.example.freemealapi.models.MealsResponse
 import com.example.freemealapi.repository.MealRepository
@@ -22,8 +24,18 @@ import retrofit2.Response
 
 class MealViewModel(
     application: Application,
-    val mealRepository: MealRepository
+    var mealRepository: MealRepository
 ): AndroidViewModel(application) {
+
+    fun upsert(mealIngredients: MealIngredients){
+        viewModelScope.launch {
+            mealRepository.upsert(mealIngredients)
+        }
+    }
+
+    fun getAllMealIngredients():LiveData<MutableList<MealIngredients>> = mealRepository.getAllMealIngredients()
+
+
 
     private val _categoryLiveData = MutableLiveData<Resource<CategoriesResponse>>()
     val mealCategories: LiveData<Resource<CategoriesResponse>> = _categoryLiveData
@@ -40,6 +52,8 @@ class MealViewModel(
     init {
         getAllMealCategories()
 
+        val mealIngredientsDao = MealIngredientsDatabase.getDatabase(application).mealIngredientsDao()
+        mealRepository = MealRepository(mealIngredientsDao)
 
     }
 

@@ -16,6 +16,7 @@ import com.example.freemealapi.adapter.MealAdapter
 import com.example.freemealapi.adapter.SearchAdapter
 import com.example.freemealapi.api.RetrofitInstance
 import com.example.freemealapi.databinding.ActivityHomeBinding
+import com.example.freemealapi.db.MealIngredientsDatabase
 import com.example.freemealapi.models.*
 import com.example.freemealapi.repository.MealRepository
 import com.example.freemealapi.utils.Resource
@@ -50,7 +51,8 @@ class HomeActivity : AppCompatActivity() {
 
         searchRecipes()
 
-        val repository = MealRepository()
+        val mealIngredientsDao = MealIngredientsDatabase.getDatabase(this).mealIngredientsDao()
+        val repository = MealRepository(mealIngredientsDao)
         val mealViewModelProviderFactory = MealViewModelProviderFactory(applicationContext as Application, repository)
         mealViewModel = ViewModelProvider(this, mealViewModelProviderFactory)[MealViewModel::class.java]
 

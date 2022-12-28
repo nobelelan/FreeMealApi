@@ -39,7 +39,7 @@ class SearchAdapter: RecyclerView.Adapter<SearchAdapter.MealViewHolder>() {
         holder.binding.tvRecipeName.text = specificMealList[position].strMeal
 
         holder.itemView.setOnClickListener {
-            searchItemListener!!.onItemClick(specificMealList[position].idMeal)
+            searchItemListener!!.onItemClick(specificMealList[position].idMeal!!)
         }
     }
 

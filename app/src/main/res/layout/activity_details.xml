@@ -8,6 +8,17 @@
     android:background="@color/white"
     tools:context=".ui.DetailsActivity">
 
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_save"
+        app:tint="@android:color/holo_red_dark"
+        android:backgroundTint="@color/yellow"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"/>
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
