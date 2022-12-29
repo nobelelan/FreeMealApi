@@ -56,8 +56,12 @@ class DetailsActivity : AppCompatActivity() {
                     response.data.let { ingredientsResponse ->
                         binding.progressBar.visibility = View.GONE
                         val ingredientsList = ingredientsResponse?.mealIngredients
-                        ingredientsList?.let {
-                            val ingredients = it[0]
+                        ingredientsList?.let { mealIngredients ->
+                            val ingredients = mealIngredients[0]
+
+                            binding.fabSaveMeal.setOnClickListener {
+                                mealViewModel.upsert(mealIngredients[0])
+                            }
 
                             Glide.with(this)
                                 .load(ingredients.strMealThumb)

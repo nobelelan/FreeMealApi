@@ -49,6 +49,8 @@ class HomeActivity : AppCompatActivity() {
 
         setUpSearchRecyclerView()
 
+        setUpSavedRecyclerView()
+
         searchRecipes()
 
         val mealIngredientsDao = MealIngredientsDatabase.getDatabase(this).mealIngredientsDao()
@@ -72,27 +74,15 @@ class HomeActivity : AppCompatActivity() {
         mealAdapter.setOnClickListener(mealClickListener)
         searchAdapter.setOnClickListener(searchItemListener)
 
+
+
+        mealViewModel.getAllMealIngredients().observe(this, Observer {
+            searchAdapter.setSearchItemData(it)
+        })
     }
 
-//    private fun handleIngredientsResponse(response: Resource<MealIngredientsResponse>) {
-    // TODO: complete this code when upgrate to data base
-    //        mealViewModel.ingredients.observe(this, Observer { response ->
-//            handleIngredientsResponse(response)
-//        })
-//
-//        when(response){
-//            is Resource.Success ->{
-//                response.data.let { ingredientsResponse ->
-//                    searchAdapter.setSearchItemData(ingredientsResponse?.mealIngredients?.toMutableList()!!)
-//                }
-//            }
-//            is Resource.Error ->{}
-//            is Resource.Loading ->{}
-//        }
-//    }
 
     fun searchRecipes(){
-        // TODO: search not work when query not match with strMeal on the api
         binding.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if(query.isNullOrEmpty()){
@@ -243,5 +233,10 @@ class HomeActivity : AppCompatActivity() {
         val searchRecyclerView = binding.rvSearchSpecificMeal
         searchRecyclerView.adapter = searchAdapter
         searchRecyclerView.layoutManager = LinearLayoutManager(this)
+    }
+    private fun setUpSavedRecyclerView(){
+        val savedRecyclerView = binding.rvSavedRecipes
+        savedRecyclerView.adapter = searchAdapter
+        savedRecyclerView.layoutManager = LinearLayoutManager(this)
     }
 }
