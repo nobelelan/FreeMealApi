@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.freemealapi.adapter.CategoryAdapter
 import com.example.freemealapi.adapter.MealAdapter
+import com.example.freemealapi.adapter.SavedRecipesAdapter
 import com.example.freemealapi.adapter.SearchAdapter
 import com.example.freemealapi.api.RetrofitInstance
 import com.example.freemealapi.databinding.ActivityHomeBinding
@@ -37,6 +38,7 @@ class HomeActivity : AppCompatActivity() {
     private val categoryAdapter: CategoryAdapter by lazy { CategoryAdapter() }
     private val mealAdapter: MealAdapter by lazy { MealAdapter() }
     private val searchAdapter: SearchAdapter by lazy { SearchAdapter() }
+    private val savedRecipesAdapter: SavedRecipesAdapter by lazy { SavedRecipesAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +79,7 @@ class HomeActivity : AppCompatActivity() {
 
 
         mealViewModel.getAllMealIngredients().observe(this, Observer {
-            searchAdapter.setSearchItemData(it)
+            savedRecipesAdapter.differ.submitList(it)
         })
     }
 
@@ -236,7 +238,7 @@ class HomeActivity : AppCompatActivity() {
     }
     private fun setUpSavedRecyclerView(){
         val savedRecyclerView = binding.rvSavedRecipes
-        savedRecyclerView.adapter = searchAdapter
+        savedRecyclerView.adapter = savedRecipesAdapter
         savedRecyclerView.layoutManager = LinearLayoutManager(this)
     }
 }

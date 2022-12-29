@@ -11,6 +11,7 @@
         <entry key="..\:/AndroidMyProjects/NotMVVM/FreeMealApi/app/src/main/res/drawable/ic_back.xml" value="0.295" />
         <entry key="..\:/AndroidMyProjects/NotMVVM/FreeMealApi/app/src/main/res/drawable/ic_calories.xml" value="0.2065" />
         <entry key="..\:/AndroidMyProjects/NotMVVM/FreeMealApi/app/src/main/res/drawable/ic_cooking_time.xml" value="0.2065" />
+        <entry key="..\:/AndroidMyProjects/NotMVVM/FreeMealApi/app/src/main/res/drawable/ic_delete.xml" value="0.2065" />
         <entry key="..\:/AndroidMyProjects/NotMVVM/FreeMealApi/app/src/main/res/drawable/ic_person.xml" value="0.2065" />
         <entry key="..\:/AndroidMyProjects/NotMVVM/FreeMealApi/app/src/main/res/drawable/ic_save.xml" value="0.295" />
         <entry key="..\:/AndroidMyProjects/NotMVVM/FreeMealApi/app/src/main/res/drawable/ic_youtube.xml" value="0.2065" />
@@ -20,6 +21,7 @@
         <entry key="..\:/AndroidMyProjects/NotMVVM/FreeMealApi/app/src/main/res/layout/activity_home.xml" value="0.3625" />
         <entry key="..\:/AndroidMyProjects/NotMVVM/FreeMealApi/app/src/main/res/layout/activity_youtube_web.xml" value="0.3625" />
         <entry key="..\:/AndroidMyProjects/NotMVVM/FreeMealApi/app/src/main/res/layout/rv_main_category_item.xml" value="0.3625" />
+        <entry key="..\:/AndroidMyProjects/NotMVVM/FreeMealApi/app/src/main/res/layout/rv_saved_recipes.xml" value="0.3625" />
         <entry key="..\:/AndroidMyProjects/NotMVVM/FreeMealApi/app/src/main/res/layout/rv_search_item.xml" value="0.3625" />
         <entry key="..\:/AndroidMyProjects/NotMVVM/FreeMealApi/app/src/main/res/layout/rv_sub_category_item.xml" value="0.5" />
       </map>
