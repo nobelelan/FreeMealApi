@@ -20,4 +20,6 @@ class MealRepository(
     suspend fun upsert(mealIngredients: MealIngredients) = mealIngredientsDao.upsert(mealIngredients)
 
     fun getAllMealIngredients(): LiveData<MutableList<MealIngredients>> = mealIngredientsDao.getAllMealIngredients()
+
+    suspend fun deleteSingleMealIngredients(mealIngredients: MealIngredients) = mealIngredientsDao.deleteSingleMealIngredients(mealIngredients)
 }

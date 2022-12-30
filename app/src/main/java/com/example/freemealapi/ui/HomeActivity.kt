@@ -75,12 +75,21 @@ class HomeActivity : AppCompatActivity() {
         categoryAdapter.setClickListener(categoryClickListener)
         mealAdapter.setOnClickListener(mealClickListener)
         searchAdapter.setOnClickListener(searchItemListener)
+        savedRecipesAdapter.setOnClickListener(watchVideoClickListener)
 
 
 
         mealViewModel.getAllMealIngredients().observe(this, Observer {
             savedRecipesAdapter.differ.submitList(it)
         })
+    }
+
+    val watchVideoClickListener = object: SavedRecipesAdapter.OnWatchVideoClickListener{
+        override fun onItemClick(strYoutube: String) {
+            val intent = Intent(this@HomeActivity, YoutubeWebActivity::class.java)
+            intent.putExtra("ytUrl", strYoutube)
+            startActivity(intent)
+        }
     }
 
 
@@ -156,11 +165,6 @@ class HomeActivity : AppCompatActivity() {
 
     val mealClickListener = object : MealAdapter.OnItemClickListener{
         override fun onItemClick(mealId: String) {
-
-//            mealList.forEach {
-//                val ist = mealViewModel.getSpecificMealOnName(it.strMeal)
-            // TODO: save each item to room db when create one
-//            }
 
             val intent = Intent(this@HomeActivity, DetailsActivity::class.java)
             intent.putExtra("categoryMealId", mealId)

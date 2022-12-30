@@ -16,6 +16,16 @@ import com.example.freemealapi.ui.YoutubeWebActivity
 
 class SavedRecipesAdapter: RecyclerView.Adapter<SavedRecipesAdapter.SavedRecipesViewHolder>() {
 
+    var watchVideoClickListener: OnWatchVideoClickListener? = null
+
+    interface OnWatchVideoClickListener{
+        fun onItemClick(strYoutube: String)
+    }
+
+    fun setOnClickListener(listener: OnWatchVideoClickListener){
+        watchVideoClickListener = listener
+    }
+
     inner class SavedRecipesViewHolder(val binding: RvSavedRecipesBinding): RecyclerView.ViewHolder(binding.root)
 
     private val differCallBack = object : DiffUtil.ItemCallback<MealIngredients>(){
@@ -48,11 +58,9 @@ class SavedRecipesAdapter: RecyclerView.Adapter<SavedRecipesAdapter.SavedRecipes
             .error(R.drawable.default_food_img)
             .into(holder.binding.imgMealImage)
 
-//        holder.binding.txtYtWatch.setOnClickListener {
-//            val intent = Intent(this, YoutubeWebActivity::class.java)
-//            intent.putExtra("ytUrl", ingredients.strYoutube)
-//            startActivity(intent)
-//        }
+        holder.binding.txtYtWatch.setOnClickListener {
+            watchVideoClickListener!!.onItemClick(ingredients.strYoutube!!)
+        }
 
         holder.binding.txtMealName.text = ingredients.strMeal
         holder.binding.txtAreaName.text = ingredients.strArea

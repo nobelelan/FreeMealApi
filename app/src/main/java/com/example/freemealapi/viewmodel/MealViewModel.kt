@@ -36,6 +36,11 @@ class MealViewModel(
     fun getAllMealIngredients():LiveData<MutableList<MealIngredients>> = mealRepository.getAllMealIngredients()
 
 
+    fun deleteSingleMealIngredients(mealIngredients: MealIngredients){
+        viewModelScope.launch {
+            mealRepository.deleteSingleMealIngredients(mealIngredients)
+        }
+    }
 
     private val _categoryLiveData = MutableLiveData<Resource<CategoriesResponse>>()
     val mealCategories: LiveData<Resource<CategoriesResponse>> = _categoryLiveData
