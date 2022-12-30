@@ -69,7 +69,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
-                    android:id="@+id/btnBack"
+                    android:id="@+id/btnDelete"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:background="@color/darkGray"

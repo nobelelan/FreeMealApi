@@ -16,14 +16,15 @@ import com.example.freemealapi.ui.YoutubeWebActivity
 
 class SavedRecipesAdapter: RecyclerView.Adapter<SavedRecipesAdapter.SavedRecipesViewHolder>() {
 
-    var watchVideoClickListener: OnWatchVideoClickListener? = null
+    var itemClickListener: OnItemClickListener? = null
 
-    interface OnWatchVideoClickListener{
-        fun onItemClick(strYoutube: String)
+    interface OnItemClickListener{
+        fun onWatchVideoClick(strYoutube: String)
+        fun onDeleteClick(mealIngredients: MealIngredients)
     }
 
-    fun setOnClickListener(listener: OnWatchVideoClickListener){
-        watchVideoClickListener = listener
+    fun setOnClickListener(listener: OnItemClickListener){
+        itemClickListener = listener
     }
 
     inner class SavedRecipesViewHolder(val binding: RvSavedRecipesBinding): RecyclerView.ViewHolder(binding.root)
@@ -59,7 +60,10 @@ class SavedRecipesAdapter: RecyclerView.Adapter<SavedRecipesAdapter.SavedRecipes
             .into(holder.binding.imgMealImage)
 
         holder.binding.txtYtWatch.setOnClickListener {
-            watchVideoClickListener!!.onItemClick(ingredients.strYoutube!!)
+            itemClickListener!!.onWatchVideoClick(ingredients.strYoutube!!)
+        }
+        holder.binding.btnDelete.setOnClickListener {
+            itemClickListener!!.onDeleteClick(ingredients)
         }
 
         holder.binding.txtMealName.text = ingredients.strMeal

@@ -84,11 +84,16 @@ class HomeActivity : AppCompatActivity() {
         })
     }
 
-    val watchVideoClickListener = object: SavedRecipesAdapter.OnWatchVideoClickListener{
-        override fun onItemClick(strYoutube: String) {
+    val watchVideoClickListener = object: SavedRecipesAdapter.OnItemClickListener{
+
+        override fun onWatchVideoClick(strYoutube: String) {
             val intent = Intent(this@HomeActivity, YoutubeWebActivity::class.java)
             intent.putExtra("ytUrl", strYoutube)
             startActivity(intent)
+        }
+
+        override fun onDeleteClick(mealIngredients: MealIngredients) {
+            mealViewModel.deleteSingleMealIngredients(mealIngredients)
         }
     }
 
