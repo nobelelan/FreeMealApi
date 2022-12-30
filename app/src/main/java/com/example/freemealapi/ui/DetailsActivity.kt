@@ -61,6 +61,7 @@ class DetailsActivity : AppCompatActivity() {
 
                             binding.fabSaveMeal.setOnClickListener {
                                 mealViewModel.upsert(mealIngredients[0])
+                                Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show()
                             }
 
                             Glide.with(this)
