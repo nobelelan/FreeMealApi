@@ -75,7 +75,7 @@ class HomeActivity : AppCompatActivity() {
         categoryAdapter.setClickListener(categoryClickListener)
         mealAdapter.setOnClickListener(mealClickListener)
         searchAdapter.setOnClickListener(searchItemListener)
-        savedRecipesAdapter.setOnClickListener(watchVideoClickListener)
+        savedRecipesAdapter.setOnClickListener(savedRecipesClickListener)
 
 
 
@@ -84,7 +84,7 @@ class HomeActivity : AppCompatActivity() {
         })
     }
 
-    val watchVideoClickListener = object: SavedRecipesAdapter.OnItemClickListener{
+    val savedRecipesClickListener = object: SavedRecipesAdapter.OnItemClickListener{
 
         override fun onWatchVideoClick(strYoutube: String) {
             val intent = Intent(this@HomeActivity, YoutubeWebActivity::class.java)
@@ -137,6 +137,8 @@ class HomeActivity : AppCompatActivity() {
     private fun handleSpecificMealResponse(response: Resource<MealIngredientsResponse>) {
         when(response){
             is Resource.Success ->{
+                binding.txtCategoriesText.visibility = View.VISIBLE
+                binding.txtSubCategory.visibility = View.VISIBLE
                 response.data?.let { mealListResponse ->
                     mealListResponse.mealIngredients?.toMutableList()?.let {
                         searchAdapter.setSearchItemData(it)
@@ -145,12 +147,16 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
             is Resource.Error -> {
+                binding.txtCategoriesText.visibility = View.GONE
+                binding.txtSubCategory.visibility = View.GONE
                 response.message?.let { message ->
                     binding.progressBar.visibility = View.INVISIBLE
                     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                 }
             }
             is Resource.Loading -> {
+                binding.txtCategoriesText.visibility = View.GONE
+                binding.txtSubCategory.visibility = View.GONE
                 binding.progressBar.visibility = View.VISIBLE
             }
         }
@@ -188,18 +194,24 @@ class HomeActivity : AppCompatActivity() {
     private fun handleMealsResponse(response: Resource<MealsResponse>) {
         when(response){
             is Resource.Success ->{
+                binding.txtCategoriesText.visibility = View.VISIBLE
+                binding.txtSubCategory.visibility = View.VISIBLE
                 response.data?.let { mealsResponse ->
                     binding.progressBar.visibility = View.INVISIBLE
                     mealAdapter.setMealData(mealsResponse.meals!!.toMutableList())
                 }
             }
             is Resource.Error -> {
+                binding.txtCategoriesText.visibility = View.GONE
+                binding.txtSubCategory.visibility = View.GONE
                 response.message?.let { message ->
                     binding.progressBar.visibility = View.INVISIBLE
                     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                 }
             }
             is Resource.Loading -> {
+                binding.txtCategoriesText.visibility = View.GONE
+                binding.txtSubCategory.visibility = View.GONE
                 binding.progressBar.visibility = View.VISIBLE
             }
         }
@@ -209,6 +221,8 @@ class HomeActivity : AppCompatActivity() {
     private fun handleCategoriesResponse(response: Resource<CategoriesResponse>) {
         when(response){
             is Resource.Success ->{
+                binding.txtCategoriesText.visibility = View.VISIBLE
+                binding.txtSubCategory.visibility = View.VISIBLE
                 response.data?.let { categoriesResponse ->
                     categoryAdapter.setCategoryData(categoriesResponse.categories!!.toMutableList())
                     mealViewModel.getMealOnCategory(categoriesResponse.categories.first().strCategory)
@@ -217,12 +231,16 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
             is Resource.Error -> {
+                binding.txtCategoriesText.visibility = View.GONE
+                binding.txtSubCategory.visibility = View.GONE
                 response.message?.let { message ->
                     binding.progressBar.visibility = View.INVISIBLE
                     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                 }
             }
             is Resource.Loading -> {
+                binding.txtCategoriesText.visibility = View.GONE
+                binding.txtSubCategory.visibility = View.GONE
                 binding.progressBar.visibility = View.VISIBLE
             }
         }
