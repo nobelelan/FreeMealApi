@@ -23,6 +23,7 @@ import com.example.freemealapi.repository.MealRepository
 import com.example.freemealapi.utils.Resource
 import com.example.freemealapi.viewmodel.MealViewModel
 import com.example.freemealapi.viewmodel.MealViewModelProviderFactory
+import com.google.android.gms.ads.*
 import kotlinx.coroutines.delay
 import retrofit2.Call
 import retrofit2.Callback
@@ -39,6 +40,8 @@ class HomeActivity : AppCompatActivity() {
     private val mealAdapter: MealAdapter by lazy { MealAdapter() }
     private val searchAdapter: SearchAdapter by lazy { SearchAdapter() }
     private val savedRecipesAdapter: SavedRecipesAdapter by lazy { SavedRecipesAdapter() }
+
+    private var homeBannerAdView: AdView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +85,53 @@ class HomeActivity : AppCompatActivity() {
         mealViewModel.getAllMealIngredients().observe(this, Observer {
             savedRecipesAdapter.differ.submitList(it)
         })
+
+
+
+
+
+        MobileAds.initialize(this)
+
+        MobileAds.setRequestConfiguration(
+            RequestConfiguration.Builder()
+                .setTestDeviceIds(listOf("PLACE_TEST_DEVICE_ID_1_HERE","PLACE_TEST_DEVICE_ID_2_HERE"))
+                .build()
+        )
+
+        homeBannerAdView = binding.homeBannerAd
+
+        val adRequest = AdRequest.Builder().build()
+        homeBannerAdView?.loadAd(adRequest)
+
+        homeBannerAdView?.adListener = object : AdListener(){
+            override fun onAdClicked() {
+                super.onAdClicked()
+            }
+
+            override fun onAdClosed() {
+                super.onAdClosed()
+            }
+
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                super.onAdFailedToLoad(adError)
+            }
+
+            override fun onAdImpression() {
+                super.onAdImpression()
+            }
+
+            override fun onAdLoaded() {
+                super.onAdLoaded()
+            }
+
+            override fun onAdOpened() {
+                super.onAdOpened()
+            }
+
+            override fun onAdSwipeGestureClicked() {
+                super.onAdSwipeGestureClicked()
+            }
+        }
     }
 
     val savedRecipesClickListener = object: SavedRecipesAdapter.OnItemClickListener{
@@ -267,5 +317,20 @@ class HomeActivity : AppCompatActivity() {
         val savedRecyclerView = binding.rvSavedRecipes
         savedRecyclerView.adapter = savedRecipesAdapter
         savedRecyclerView.layoutManager = LinearLayoutManager(this)
+    }
+
+    override fun onPause() {
+        homeBannerAdView?.pause()
+        super.onPause()
+    }
+
+    override fun onResume() {
+        homeBannerAdView?.resume()
+        super.onResume()
+    }
+
+    override fun onDestroy() {
+        homeBannerAdView?.destroy()
+        super.onDestroy()
     }
 }

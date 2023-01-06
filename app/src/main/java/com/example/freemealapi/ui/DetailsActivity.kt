@@ -18,12 +18,15 @@ import com.example.freemealapi.repository.MealRepository
 import com.example.freemealapi.utils.Resource
 import com.example.freemealapi.viewmodel.MealViewModel
 import com.example.freemealapi.viewmodel.MealViewModelProviderFactory
+import com.google.android.gms.ads.*
 
 class DetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailsBinding
 
     private lateinit var mealViewModel: MealViewModel
+
+    private var detailsBannerAdView: AdView? = null
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -118,5 +121,65 @@ class DetailsActivity : AppCompatActivity() {
             }
         })
 
+
+
+
+        MobileAds.initialize(this)
+
+        MobileAds.setRequestConfiguration(
+            RequestConfiguration.Builder()
+                .setTestDeviceIds(listOf("PLACE_TEST_DEVICE_ID_1_HERE","PLACE_TEST_DEVICE_ID_2_HERE"))
+                .build()
+        )
+
+        detailsBannerAdView = binding.detailsBannerAdd
+
+        val adRequest = AdRequest.Builder().build()
+        detailsBannerAdView?.loadAd(adRequest)
+
+        detailsBannerAdView?.adListener = object : AdListener(){
+            override fun onAdClicked() {
+                super.onAdClicked()
+            }
+
+            override fun onAdClosed() {
+                super.onAdClosed()
+            }
+
+            override fun onAdFailedToLoad(p0: LoadAdError) {
+                super.onAdFailedToLoad(p0)
+            }
+
+            override fun onAdImpression() {
+                super.onAdImpression()
+            }
+
+            override fun onAdLoaded() {
+                super.onAdLoaded()
+            }
+
+            override fun onAdOpened() {
+                super.onAdOpened()
+            }
+
+            override fun onAdSwipeGestureClicked() {
+                super.onAdSwipeGestureClicked()
+            }
+        }
+    }
+
+    override fun onPause() {
+        detailsBannerAdView?.pause()
+        super.onPause()
+    }
+
+    override fun onResume() {
+        detailsBannerAdView?.resume()
+        super.onResume()
+    }
+
+    override fun onDestroy() {
+        detailsBannerAdView?.destroy()
+        super.onDestroy()
     }
 }

@@ -86,6 +86,19 @@
                 tools:itemCount="1"
                 tools:listitem="@layout/rv_sub_category_item" />
 
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/homeBannerAd"
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                ads:adSize="SMART_BANNER"
+                ads:adUnitId="@string/test_banner_ad_id"
+                ads:layout_constraintEnd_toEndOf="parent"
+                ads:layout_constraintStart_toStartOf="parent"
+                ads:layout_constraintTop_toBottomOf="@id/rvSubCategory"/>
+
             <TextView
                 android:id="@+id/txtSavedMeal"
                 android:layout_width="wrap_content"
@@ -99,7 +112,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rvSubCategory" />
+                app:layout_constraintTop_toBottomOf="@+id/homeBannerAd"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvSavedRecipes"
